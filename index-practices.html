@@ -8,59 +8,46 @@
     <meta name="author" content="Ayden Roddy"> <!--credits me as owner  -->
     <meta name="description" content="A portfolio showcasing my web development work."> <!--   summary for search engines -->
     <style>
-      :root {
-        --primary: #2563eb;
-      }
-
-      body {
-        background-color: #f8fafc;
-        color: #1e293b;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        line-height: 1.6;
-      }
-
       html {
         scroll-behavior: smooth;
       }
-
-      h1,
-      h2,
-      h3 {
-        font-family: Georgia, serif;
+      section {
+        padding: 60px 0;
+        margin-bottom: 0;
+        border-bottom: 1px solid #e2e8f0;
       }
-
-      h1 {
-        color: #2563eb;
-        font-size: 2.5rem;
+      nav {
+        padding: 15px 0;
       }
-
+      aside { 
+        border-left: 4px solid #f59e0b;
+        padding-left: 20px;
+      }
+      .project-card {
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+       }
+      table {
+        border: 1px solid #cbd5e1;
+      }
+      img {
+        border-radius: 6px;
+      }
       h2 {
-        color: #1e40af;
-        margin-bottom: 20px;
+        margin-top: 0;
       }
-
-      h3 {
-        color: #475569;
-        font-weight: 600;
-      }
-
-      a {
-        color: var(--primary);
-        text-decoration: none;
-        transition: color 0.3s ease;
-      }
-
-      a:visited {
-        color: #1d4ed8;
-      }
-
-      a:hover {
-        color: #f59e0b;
-        text-decoration: underline;
-      }
-
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 20px;
+       }
       .featured-project-image {
         border: 2px solid #555;
+      }
+      #contact input,
+      #contact textarea,
+      #contact button {
+        vertical-align: top;
       }
     </style>
   </head>
@@ -86,6 +73,7 @@
   <hr>
   </header>
     <section id="about">
+      <div class="container">
     <h2>About Me </h2>
 
       <figure>
@@ -117,9 +105,11 @@
         <source src="media/my-audio.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
       </audio>
-      </section>
+      </div>
+    </section>
     <!--skills-->
      <section id="skills">
+      <div class="container">
       <h2>Skills</h2>
       <ul>
         <li>Python</li>
@@ -144,10 +134,12 @@
         <br>
         <li><strong>Aspiring Cybersecurity Professional <em>2027</em></strong> — Working toward a career protecting systems.</li>
       </ol>
-      </section>
+      </div>
+    </section>
 
     <!-- Projects Section -->
      <section id="projects">
+      <div class="container">
       <h2>Featured Projects</h2>
       <div class="projects-grid">
         <figure>
@@ -187,17 +179,51 @@
           </tr>
         </tbody>
       </table>
+      </div>
     </section>
 
     <!-- Contact Section -->
     <section id="contact">
+      <div class="container">
       <h2>Contact</h2>
       <p>Feel free to reach out to me:</p>
+      <form id="contactForm" action="#" method="POST">
+        <fieldset>
+          <legend>Your contact details</legend>
+          <input type="text" name="name" placeholder="Your Name" required>
+          <input type="email" name="email" placeholder="Your Email" required>
+          <textarea name="message" rows="5" placeholder="Your Message"></textarea>
+        </fieldset>
+        <fieldset>
+          <legend>Project type</legend>
+          <label for="projectType">What kind of project do you have in mind?</label>
+          <select id="projectType" name="projectType">
+            <option value="website">Website</option>
+            <option value="web-application">Web application</option>
+            <option value="e-commerce">E-commerce site</option>
+            <option value="other">Other (please describe)</option>
+          </select>
+        </fieldset>
+        <fieldset>
+          <legend>Budget</legend>
+          <label><input type="radio" name="budget" value="1k-5k"> $1k-$5k </label>
+          <label><input type="radio" name="budget" value="5k-15k"> $5k-$15k</label>
+          <label><input type="radio" name="budget" value="15k-plus"> $15k+</label>
+        </fieldset>
+        <fieldset>
+          <legend>Updates</legend>
+          <label><input type="checkbox" name="newsletter" value="yes"> Subscribe to updates</label>
+        </fieldset>
+        <button type="submit">Send Message 🚀</button>
+        <button type="button" onclick="this.form.reset()">Clear Form</button>
+        <button type="button" onclick="window.print()">Print</button>
+      </form>
       
       <p>Email: <a href="mailto:ayden0825@gmail.com">Email Me</a></p>
       <p>Phone: <a href="tel:7326428374">Call Me</a></p>
       <p><a href="javascript:window.print()">Print This Page</a></p>
       <p><a href="#" onclick="alert('Coming soon!')">Sign up for newsletter</a></p>
+      </div>
     </section>
     <!-- Footer -->
     <footer>
