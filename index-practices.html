@@ -7,23 +7,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!--  screen displays correctly on different sized screens  -->
     <meta name="author" content="Ayden Roddy"> <!--credits me as owner  -->
     <meta name="description" content="A portfolio showcasing my web development work."> <!--   summary for search engines -->
+    <link rel="stylesheet" href="portfolio.css">
   </head>
-  <body>
+  <body id="top"> <!--back to top-->
 
-    <!-- chapter 2 -->
+    <!-- practice activity 2 -->
   <header>
     <h1> Ayden Roddy </h1>
     <h2>Web Developer<br> and Designer</h2>
     <p>I am studying at OCVTS with hopes of working in <strong>Cybersecurity</strong></p>
+    <!--Navigation-->
+    <nav>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+
   <!--hero content here-->
     <!-- Header / Hero Section -->
   <hr>
   </header>
     <section id="about">
+      <div class="container">
     <h2>About Me </h2>
 
-   
-    
+      <figure>
+        <img src="https://kitchenfunwithmy3sons.com/wp-content/uploads/2020/02/fluffy-cow-1-scaled.jpg" alt="Image of highland cow sitting" width="400" height="400">
+        <figcaption>A Roddy - Computer Science Student</figcaption>
+      </figure>
+
+     <!-- About Section -->
     <!--hero specifically-->
 
       <p>My name is <strong>Ayden Roddy</strong>, and I am studying at Ocean County Toms River OCVTS for computer science, but my ultimate goal is <strong>Cybersecurity</strong>. <br>  </p>
@@ -35,19 +51,152 @@
       <blockquote>
         "The only way to do great work is to love what you do."
         <cite>— Steve Jobs</cite></blockquote>
-    </section>
-    <!-- Navigation -->
 
-    <!-- About Section -->
+      <h3>Video</h3>
+      <video controls width="320" poster="media/video-poster.jpg">
+        <source src="media/my-video.mp4" type="video/mp4">
+        Your browser does not support the video element.
+      </video>
+
+      <h3>Audio</h3>
+      <audio controls>
+        <source src="media/my-audio.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+      </div>
+    </section>
+    <!--skills-->
+     <section id="skills">
+      <div class="container">
+      <h2>Skills</h2>
+      <ul>
+        <li>Python</li>
+        <li>HTML</li>
+        <li>CSS
+          <ul>
+            <li>Flexbox</li>
+            <li>Grid</li>
+          </ul>
+        </li>
+        <li>Git</li>
+        <li>javascript</li>
+        <li>Java</li>
+      </ul>
+      <h3>Career Timeline</h3>
+      <ol class="timeline">
+        <li><strong>Computer Science Student <em>2026–Present</em></strong> — Studying computer science at OCVTS.</li>
+        <br>
+        <li><strong>Web Developer (Favorites Hub) <em>2026</em></strong> — Building and refining a personal web project.</li>
+        <br>
+        <li><strong>Programming Skills Development <em>2026–Present</em></strong> — Practicing Python, HTML, CSS, JavaScript, Git, and Java.</li>
+        <br>
+        <li><strong>Aspiring Cybersecurity Professional <em>2027</em></strong> — Working toward a career protecting systems.</li>
+      </ol>
+      </div>
+    </section>
 
     <!-- Projects Section -->
+     <section id="projects">
+      <div class="container">
+      <h2>Featured Projects</h2>
+      <div class="projects-grid">
+        <figure>
+          <img class="featured-project-image" src="FavoritesSS.jpg.png" alt="Image of the Favorites Hub Web Page" width="800" height="400">
+          <figcaption>Mini Project 1: Favorites Hub Web Page</figcaption>
+        </figure>
+        <figure>
+          <img class="featured-project-image"src="CareerFairImage.png" alt="Image of the OCVTS Career Fair 2026 Mockup Web Page" width="800" height="400">
+          <figcaption>OCVTS Career Fair 2026 Mockup</figcaption>
+        </figure>
+        <figure>
+          <img class="featured-project-image" src="AboutMeWebsite.png" alt="Image of the About Me Website, your current website" width="800" height="400">
+          <figcaption>About Me Website</figcaption>
+        </figure>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Title</th>
+            <th scope="col">Technologies</th>
+            <th scope="col">Year</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Favorites Hub Web Page</td>
+            <td>HTML, CSS</td>
+            <td>2026</td>
+            <td>Completed</td>
+          </tr>
+          <tr>
+            <td>OCVTS Career Fair 2026 Web Page (mockup)</td>
+            <td>HTML</td>
+            <td>2026</td>
+            <td>Completed</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </section>
 
     <!-- Contact Section -->
-
+    <section id="contact">
+      <div class="container">
+      <h2>Contact</h2>
+      <p>Feel free to reach out to me:</p>
+      <form id="contactForm" action="#" method="POST">
+        <fieldset>
+          <legend>Your contact details</legend>
+          <input type="text" name="name" placeholder="Your Name" required>
+          <input type="email" name="email" placeholder="Your Email" required>
+          <textarea name="message" rows="5" placeholder="Your Message"></textarea>
+        </fieldset>
+        <fieldset>
+          <legend>Project type</legend>
+          <label for="projectType">What kind of project do you have in mind?</label>
+          <select id="projectType" name="projectType">
+            <option value="website">Website</option>
+            <option value="web-application">Web application</option>
+            <option value="e-commerce">E-commerce site</option>
+            <option value="other">Other (please describe)</option>
+          </select>
+        </fieldset>
+        <fieldset>
+          <legend>Budget</legend>
+          <label><input type="radio" name="budget" value="1k-5k"> $1k-$5k </label>
+          <label><input type="radio" name="budget" value="5k-15k"> $5k-$15k</label>
+          <label><input type="radio" name="budget" value="15k-plus"> $15k+</label>
+        </fieldset>
+        <fieldset>
+          <legend>Updates</legend>
+          <label><input type="checkbox" name="newsletter" value="yes"> Subscribe to updates</label>
+        </fieldset>
+        <button type="submit">Send Message 🚀</button>
+        <button type="button" onclick="this.form.reset()">Clear Form</button>
+        <button type="button" onclick="window.print()">Print</button>
+      </form>
+      
+      <p>Email: <a href="mailto:ayden0825@gmail.com">Email Me</a></p>
+      <p>Phone: <a href="tel:7326428374">Call Me</a></p>
+      <p><a href="javascript:window.print()">Print This Page</a></p>
+      <p><a href="#" onclick="alert('Coming soon!')">Sign up for newsletter</a></p>
+      </div>
+    </section>
     <!-- Footer -->
+    <footer>
+      <hr>
+      <p>Connect with me:</p>
+      <p>
+        <a href="https://github.com/AydenR784" target="_blank" rel="noopener noreferrer">GitHub</a> | 
+        <!-- <a href="https://linkedin.com/in/my name for later" target="_blank" rel="noopener noreferrer">LinkedIn</a> |  --> <!--forgot password they need time to verify I guess-->
+        <a href="https://instagram.com/ayden.rod711" target="_blank" rel="noopener noreferrer">Instagram</a> |
+        <a href="mailto:ayden082509@gmail.com">Email</a> |
+        <a href="tel:7326428374">Phone</a> |
+        <button type="button" onclick="window.print()">Print This Page</button>
+      </p>
+    </footer>
   </body>
 </html>
 
 <!-- note for me to view it, click raw then save as (always ends in .html), it will always appear in file explorer -->
-
-
