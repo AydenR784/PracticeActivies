@@ -7,14 +7,89 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!--  screen displays correctly on different sized screens  -->
     <meta name="author" content="Ayden Roddy"> <!--credits me as owner  -->
     <meta name="description" content="A portfolio showcasing my web development work."> <!--   summary for search engines -->
-    <link rel="stylesheet" href="portfolio.css">
+    <style>
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+      }
+      .tagline {
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+      nav a {
+        text-transform: uppercase;
+        font-size: 0.85rem;
+      }
+      blockquote {
+        font-style: italic;
+        line-height: 1.8;
+      }
+      h1, h2, h3, h4, h5, h6 {
+        font-family: 'Georgia', 'Times New Roman', serif;
+      }
+      code, pre, kbd, samp {
+        font-family: 'Courier New', monospace;
+      }
+      input, button, select, textarea {
+        font-family: inherit;
+      }
+      html {
+        font-size: 16px;
+        scroll-behavior: smooth;
+      }
+      section {
+        padding: 60px 0;
+        margin-bottom: 0;
+        border-bottom: 1px solid #e2e8f0;
+      }
+      nav {
+        padding: 15px 0;
+      }
+      aside { 
+        border-left: 4px solid #f59e0b;
+        padding-left: 20px;
+      }
+      .project-card {
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+       }
+      table {
+        border: 1px solid #cbd5e1;
+      }
+      img {
+        border-radius: 6px;
+      }
+      h2 {
+        font-size: 2rem;
+        margin-top: 0;
+      }
+      h1 {
+        font-size: 2.5rem;
+      }
+      p {
+        font-size: 1rem;
+      }
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 20px;
+       }
+      .featured-project-image {
+        border: 2px solid #555;
+      }
+      #contact input,
+      #contact textarea,
+      #contact button {
+        vertical-align: top;
+      }
+    </style>
   </head>
   <body id="top"> <!--back to top-->
 
     <!-- practice activity 2 -->
   <header>
     <h1> Ayden Roddy </h1>
-    <h2>Web Developer<br> and Designer</h2>
+    <h2 class="tagline">Web Developer<br> and Designer</h2>
     <p>I am studying at OCVTS with hopes of working in <strong>Cybersecurity</strong></p>
     <!--Navigation-->
     <nav>
