@@ -8,6 +8,9 @@
     <meta name="author" content="Ayden Roddy"> <!--credits me as owner  -->
     <meta name="description" content="A portfolio showcasing my web development work."> <!--   summary for search engines -->
     <style>
+      :root {
+        --primary: #2563eb;
+      }
       body {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         line-height: 1.6;
@@ -55,6 +58,20 @@
        }
       table {
         border: 1px solid #cbd5e1;
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        padding: 14px 18px;
+        text-align: left;
+      }
+      th {
+        background: var(--primary);
+        color: white;
+      }
+      tr:nth-child(even) {
+        background: #f1f5f9;
       }
       img {
         border-radius: 6px;
@@ -81,6 +98,48 @@
       #contact textarea,
       #contact button {
         vertical-align: top;
+      }
+      .skills-list {
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: 0;
+        padding: 0;
+      }
+      .skills-list > li {
+        background: var(--primary);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+      }
+      .timeline {
+        list-style: none;
+        counter-reset: year;
+        margin: 0;
+        padding: 0;
+      }
+      .timeline li {
+        position: relative;
+        padding-left: 40px;
+        border-left: 3px solid var(--primary);
+        margin-bottom: 20px;
+      }
+      .timeline li::before {
+        counter-increment: year;
+        content: counter(year);
+        position: absolute;
+        left: -15px;
+        top: 0;
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        background: var(--primary);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
     </style>
   </head>
@@ -144,7 +203,7 @@
      <section id="skills">
       <div class="container">
       <h2>Skills</h2>
-      <ul>
+      <ul class="skills-list">
         <li>Python</li>
         <li>HTML</li>
         <li>CSS
@@ -160,11 +219,8 @@
       <h3>Career Timeline</h3>
       <ol class="timeline">
         <li><strong>Computer Science Student <em>2026–Present</em></strong> — Studying computer science at OCVTS.</li>
-        <br>
         <li><strong>Web Developer (Favorites Hub) <em>2026</em></strong> — Building and refining a personal web project.</li>
-        <br>
         <li><strong>Programming Skills Development <em>2026–Present</em></strong> — Practicing Python, HTML, CSS, JavaScript, Git, and Java.</li>
-        <br>
         <li><strong>Aspiring Cybersecurity Professional <em>2027</em></strong> — Working toward a career protecting systems.</li>
       </ol>
       </div>
