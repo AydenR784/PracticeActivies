@@ -12,8 +12,28 @@
         --primary: #2563eb;
       }
       body {
+        background: linear-gradient(to right, #f8fafc, #e2e8f0);
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         line-height: 1.6;
+      }
+      header {
+        background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+        color: white;
+      }
+      header a {
+        color: white;
+      }
+      footer {
+        background: linear-gradient(to right, #f8fafc, #e2e8f0);
+      }
+      a {
+        transition: color 0.3s ease;
+      }
+      a:hover {
+        color: #1e40af;
+      }
+      header a:hover {
+        color: #bfdbfe;
       }
       .tagline {
         text-transform: uppercase;
@@ -55,11 +75,33 @@
       .project-card {
         border: 1px solid #e2e8f0;
         border-radius: 8px;
-       }
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+      .project-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+      }
+      button {
+        background: var(--primary);
+        color: white;
+        transition: background 0.3s, transform 0.2s;
+      }
+      button:hover {
+        background: #1e40af;
+        transform: translateY(-2px);
+      }
+      .profile-img {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
       table {
         border: 1px solid #cbd5e1;
         width: 100%;
         border-collapse: collapse;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      }
+      #contact form {
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
       }
       th,
       td {
@@ -169,7 +211,7 @@
     <h2>About Me </h2>
 
       <figure>
-        <img src="https://kitchenfunwithmy3sons.com/wp-content/uploads/2020/02/fluffy-cow-1-scaled.jpg" alt="Image of highland cow sitting" width="400" height="400">
+        <img class="profile-img" src="https://kitchenfunwithmy3sons.com/wp-content/uploads/2020/02/fluffy-cow-1-scaled.jpg" alt="Image of highland cow sitting" width="400" height="400">
         <figcaption>A Roddy - Computer Science Student</figcaption>
       </figure>
 
@@ -231,15 +273,15 @@
       <div class="container">
       <h2>Featured Projects</h2>
       <div class="projects-grid">
-        <figure>
+        <figure class="project-card">
           <img class="featured-project-image" src="FavoritesSS.jpg.png" alt="Image of the Favorites Hub Web Page" width="800" height="400">
           <figcaption>Mini Project 1: Favorites Hub Web Page</figcaption>
         </figure>
-        <figure>
+        <figure class="project-card">
           <img class="featured-project-image"src="CareerFairImage.png" alt="Image of the OCVTS Career Fair 2026 Mockup Web Page" width="800" height="400">
           <figcaption>OCVTS Career Fair 2026 Mockup</figcaption>
         </figure>
-        <figure>
+        <figure class="project-card">
           <img class="featured-project-image" src="AboutMeWebsite.png" alt="Image of the About Me Website, your current website" width="800" height="400">
           <figcaption>About Me Website</figcaption>
         </figure>
