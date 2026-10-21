@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toggle Box Color</title>
+</head>
+<body>
+    <button id="toggleBtn" type="button">Toggle color</button>
+    <div id="box" style="width: 200px; height: 200px; background-color: white;"></div>
+
+    <script>
+        const toggleBtn = document.getElementById("toggleBtn");
+        const box = document.getElementById("box");
+
+        toggleBtn.addEventListener("click", () => {
+            box.style.backgroundColor =
+                box.style.backgroundColor === "blue" ? "red" : "blue";
+        });
+
+        toggleBtn.addEventListener("dblclick", () => {
+            box.style.backgroundColor = "white";
+        });
+    </script>
+</body>
+</html>
