@@ -10,6 +10,8 @@
     <style>
       :root {
         --primary: #2563eb;
+        --dark: #1e293b;
+        --accent: #f59e0b;
       }
       body {
         background: linear-gradient(to right, #f8fafc, #e2e8f0);
@@ -67,16 +69,37 @@
       }
       nav {
         padding: 15px 0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: var(--dark);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      nav a {
+        color: white;
       }
       aside { 
         border-left: 4px solid #f59e0b;
         padding-left: 20px;
       }
       .project-card {
+        position: relative;
         border: 1px solid #e2e8f0;
         border-radius: 8px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
         transition: transform 0.3s, box-shadow 0.3s;
+      }
+      .project-card--featured {
+        padding-top: 42px;
+      }
+      .badge {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: var(--accent);
+        color: white;
+        padding: 4px 12px;
+        border-radius: 20px;
       }
       .project-card:hover {
         transform: translateY(-4px);
@@ -90,6 +113,22 @@
       button:hover {
         background: #1e40af;
         transform: translateY(-2px);
+      }
+      #backToTop {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 99;
+        background: var(--dark);
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
       }
       .profile-img {
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
@@ -192,20 +231,19 @@
     <h1> Ayden Roddy </h1>
     <h2 class="tagline">Web Developer<br> and Designer</h2>
     <p>I am studying at OCVTS with hopes of working in <strong>Cybersecurity</strong></p>
-    <!--Navigation-->
-    <nav>
-        <ul>
-          <li><a href="#about">About</a></li>
-          <li><a href="#skills">Skills</a></li>
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </nav>
-
   <!--hero content here-->
     <!-- Header / Hero Section -->
   <hr>
   </header>
+    <!--Navigation-->
+    <nav>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
     <section id="about">
       <div class="container">
     <h2>About Me </h2>
@@ -273,7 +311,8 @@
       <div class="container">
       <h2>Featured Projects</h2>
       <div class="projects-grid">
-        <figure class="project-card">
+        <figure class="project-card project-card--featured">
+          <span class="badge">Featured</span>
           <img class="featured-project-image" src="FavoritesSS.jpg.png" alt="Image of the Favorites Hub Web Page" width="800" height="400">
           <figcaption>Mini Project 1: Favorites Hub Web Page</figcaption>
         </figure>
@@ -369,6 +408,18 @@
         <button type="button" onclick="window.print()">Print This Page</button>
       </p>
     </footer>
+    <button id="backToTop" type="button" aria-label="Back to top">&#8679;</button>
+    <script>
+      const backToTopButton = document.getElementById('backToTop');
+
+      window.addEventListener('scroll', () => {
+        backToTopButton.style.display = window.scrollY > 200 ? 'flex' : 'none';
+      });
+
+      backToTopButton.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    </script>
   </body>
 </html>
 
