@@ -8,6 +8,7 @@
     <meta name="author" content="Ayden Roddy"> <!--credits me as owner  -->
     <meta name="description" content="A portfolio showcasing my web development work."> <!--   summary for search engines -->
     <style>
+      /* main colors */
       :root {
         --primary: #2563eb;
         --dark: #1e293b;
@@ -18,6 +19,7 @@
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         line-height: 1.6;
       }
+      /* header and footer colors */
       header {
         background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
         color: white;
@@ -37,6 +39,7 @@
       header a:hover {
         color: #bfdbfe;
       }
+      /* text styles */
       .tagline {
         text-transform: uppercase;
         letter-spacing: 2px;
@@ -58,6 +61,7 @@
       input, button, select, textarea {
         font-family: inherit;
       }
+      /* page and section spacing */
       html {
         font-size: 16px;
         scroll-behavior: smooth;
@@ -75,6 +79,17 @@
         background: var(--dark);
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       }
+      nav ul {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 30px;
+        margin: 0;
+        padding: 0;
+      }
+      nav li {
+        list-style: none;
+      }
       nav a {
         color: white;
       }
@@ -82,8 +97,17 @@
         border-left: 4px solid #f59e0b;
         padding-left: 20px;
       }
+      /* project card styles */
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+      }
       .project-card {
         position: relative;
+        width: 100%;
+        margin: 0;
+        box-sizing: border-box;
         border: 1px solid #e2e8f0;
         border-radius: 8px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
@@ -114,6 +138,7 @@
         background: #1e40af;
         transform: translateY(-2px);
       }
+      /* back to top button */
       #backToTop {
         position: fixed;
         bottom: 30px;
@@ -130,6 +155,7 @@
         font-size: 1.5rem;
         cursor: pointer;
       }
+      /* images and tables */
       .profile-img {
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
       }
@@ -167,12 +193,15 @@
       p {
         font-size: 1rem;
       }
+      /* content width */
       .container {
         max-width: 1100px;
         margin: 0 auto;
         padding: 0 20px;
        }
       .featured-project-image {
+        max-width: 100%;
+        height: auto;
         border: 2px solid #555;
       }
       #contact input,
@@ -180,6 +209,7 @@
       #contact button {
         vertical-align: top;
       }
+      /* skills list */
       .skills-list {
         list-style: none;
         display: flex;
@@ -195,6 +225,7 @@
         border-radius: 20px;
         font-size: 0.9rem;
       }
+      /* timeline */
       .timeline {
         list-style: none;
         counter-reset: year;
@@ -222,20 +253,34 @@
         align-items: center;
         justify-content: center;
       }
+      /* smaller screens */
+      @media (max-width: 600px) {
+        .skills-list {
+          gap: 8px;
+        }
+        .skills-list > li {
+          padding: 6px 12px;
+        }
+        .timeline li {
+          padding-left: 30px;
+        }
+      }
     </style>
   </head>
   <body id="top"> <!--back to top-->
 
     <!-- practice activity 2 -->
+  <!--
+    intro -->
   <header>
     <h1> Ayden Roddy </h1>
     <h2 class="tagline">Web Developer<br> and Designer</h2>
     <p>I am studying at OCVTS with hopes of working in <strong>Cybersecurity</strong></p>
   <!--hero content here-->
-    <!-- Header / Hero Section -->
+    <!-- Header-->
   <hr>
   </header>
-    <!--Navigation-->
+    <!--navigation-->
     <nav>
       <ul>
         <li><a href="#about">About</a></li>
@@ -248,14 +293,14 @@
       <div class="container">
     <h2>About Me </h2>
 
+      <!-- profile picture -->
       <figure>
         <img class="profile-img" src="https://kitchenfunwithmy3sons.com/wp-content/uploads/2020/02/fluffy-cow-1-scaled.jpg" alt="Image of highland cow sitting" width="400" height="400">
         <figcaption>A Roddy - Computer Science Student</figcaption>
       </figure>
 
-     <!-- About Section -->
+     <!-- about  -->
     <!--hero specifically-->
-
       <p>My name is <strong>Ayden Roddy</strong>, and I am studying at Ocean County Toms River OCVTS for computer science, but my ultimate goal is <strong>Cybersecurity</strong>. <br>  </p>
       <p>I do have a passion for building things, however it is not my <em>only</em> passion. <br> My main passion would be <em>learning how to protect systems.</em></p>
 
@@ -266,6 +311,7 @@
         "The only way to do great work is to love what you do."
         <cite>— Steve Jobs</cite></blockquote>
 
+      <!-- video and audio -->
       <h3>Video</h3>
       <video controls width="320" poster="media/video-poster.jpg">
         <source src="media/my-video.mp4" type="video/mp4">
@@ -306,10 +352,11 @@
       </div>
     </section>
 
-    <!-- Projects Section -->
+    <!-- projects section -->
      <section id="projects">
       <div class="container">
       <h2>Featured Projects</h2>
+      <!-- project pictures -->
       <div class="projects-grid">
         <figure class="project-card project-card--featured">
           <span class="badge">Featured</span>
@@ -325,6 +372,7 @@
           <figcaption>About Me Website</figcaption>
         </figure>
       </div>
+      <!-- project information table -->
       <table>
         <thead>
           <tr>
@@ -352,7 +400,7 @@
       </div>
     </section>
 
-    <!-- Contact Section -->
+    <!-- Contact section -->
     <section id="contact">
       <div class="container">
       <h2>Contact</h2>
@@ -364,6 +412,7 @@
           <input type="email" name="email" placeholder="Your Email" required>
           <textarea name="message" rows="5" placeholder="Your Message"></textarea>
         </fieldset>
+        <!-- project type -->
         <fieldset>
           <legend>Project type</legend>
           <label for="projectType">What kind of project do you have in mind?</label>
@@ -374,12 +423,14 @@
             <option value="other">Other (please describe)</option>
           </select>
         </fieldset>
+        <!-- budget options -->
         <fieldset>
           <legend>Budget</legend>
           <label><input type="radio" name="budget" value="1k-5k"> $1k-$5k </label>
           <label><input type="radio" name="budget" value="5k-15k"> $5k-$15k</label>
           <label><input type="radio" name="budget" value="15k-plus"> $15k+</label>
         </fieldset>
+        <!-- updates and form buttons -->
         <fieldset>
           <legend>Updates</legend>
           <label><input type="checkbox" name="newsletter" value="yes"> Subscribe to updates</label>
@@ -389,6 +440,7 @@
         <button type="button" onclick="window.print()">Print</button>
       </form>
       
+      <!-- other contact -->
       <p>Email: <a href="mailto:ayden0825@gmail.com">Email Me</a></p>
       <p>Phone: <a href="tel:7326428374">Call Me</a></p>
       <p><a href="javascript:window.print()">Print This Page</a></p>
@@ -399,6 +451,7 @@
     <footer>
       <hr>
       <p>Connect with me:</p>
+      <!-- social links -->
       <p>
         <a href="https://github.com/AydenR784" target="_blank" rel="noopener noreferrer">GitHub</a> | 
         <!-- <a href="https://linkedin.com/in/my name for later" target="_blank" rel="noopener noreferrer">LinkedIn</a> |  --> <!--forgot password they need time to verify I guess-->
@@ -408,7 +461,9 @@
         <button type="button" onclick="window.print()">Print This Page</button>
       </p>
     </footer>
+    <!-- back to top button -->
     <button id="backToTop" type="button" aria-label="Back to top">&#8679;</button>
+    <!-- button script -->
     <script>
       const backToTopButton = document.getElementById('backToTop');
 
