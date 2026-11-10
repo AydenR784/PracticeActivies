@@ -164,6 +164,18 @@
       border-radius: 20px;
     }
 
+    /* Chapter 16: Project count badge */
+    .project-count-badge {
+      display: inline-block;
+      margin-left: 8px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      background: var(--accent);
+      color: white;
+      font-size: 0.75em;
+      vertical-align: middle;
+    }
+
     .project-card:hover {
       transform: translateY(-4px);
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
@@ -411,6 +423,8 @@
         <li>javascript</li>
         <li>Java</li>
       </ul>
+      <!-- Chapter 16: Experience calculator -->
+      <p>Experience: <span id="experienceDuration">0 months</span></p>
       <h3>Career Timeline</h3>
       <ol class="timeline">
         <li><strong>Computer Science Student <em>2026–Present</em></strong> — Studying computer science at OCVTS.</li>
@@ -427,7 +441,7 @@
   <!-- projects section -->
   <section id="projects">
     <div class="container">
-      <h2>Featured Projects</h2>
+      <h2>Featured Projects <span class="project-count-badge"><span id="projectCount">0</span></span></h2>
       <!-- project pictures -->
       <div class="projects-grid">
         <figure class="project-card project-card--featured">
@@ -448,6 +462,7 @@
         </figure>
       </div>
       <!-- project information table -->
+      <!-- Chapter 16: Project counter -->
       <table>
         <thead>
           <tr>
@@ -457,7 +472,7 @@
             <th scope="col">Status</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="projectTableBody">
           <tr>
             <td>Favorites Hub Web Page</td>
             <td>HTML, CSS</td>
@@ -480,12 +495,13 @@
     <div class="container">
       <h2>Contact</h2>
       <p>Feel free to reach out to me:</p>
-      <form id="contactForm" action="#" method="POST">
+      <!-- Chapter 16: Contact form validation -->
+      <form id="contactForm" action="#" method="POST" onsubmit="return validateForm()">
         <fieldset>
           <legend>Your contact details</legend>
-          <input type="text" name="name" placeholder="Ayden Roddy" required>
-          <input type="email" name="email" placeholder="ayden082509@gmail.com" required>
-          <textarea name="message" rows="5" placeholder="No pictures!"></textarea>
+          <input type="text" name="name" placeholder="Your name">
+          <input type="email" name="email" placeholder="Your email">
+          <textarea name="message" rows="5" placeholder="Message"></textarea>
         </fieldset>
         <!-- project type -->
         <fieldset>
@@ -546,6 +562,54 @@
   <button id="backToTop" type="button" aria-label="Back to top">&#8679;</button>
   <!-- button script -->
   <script>
+    // Chapter 16: Experience calculator
+    function calculateExperience(startYear, startMonth) {
+      const currentDate = new Date();
+      return (currentDate.getFullYear() - startYear) * 12
+        + currentDate.getMonth() + 1 - startMonth;
+    }
+
+    const experienceMonths = calculateExperience(2026, 9);
+    const experienceYears = Math.floor(experienceMonths / 12);
+    const remainingMonths = experienceMonths % 12;
+    document.getElementById('experienceDuration').textContent =
+      experienceYears > 0
+        ? `${experienceYears} year${experienceYears === 1 ? '' : 's'} and ${remainingMonths} month${remainingMonths === 1 ? '' : 's'}`
+        : `${remainingMonths} month${remainingMonths === 1 ? '' : 's'}`;
+
+    // Chapter 16: Project counter
+    function updateProjectCount() {
+      const projectRows = document.querySelectorAll('table tbody tr');
+      document.getElementById('projectCount').textContent = projectRows.length;
+      console.log(projectRows.length);
+    }
+
+    updateProjectCount();
+    new MutationObserver(updateProjectCount).observe(
+      document.getElementById('projectTableBody'),
+      { childList: true }
+    );
+
+    // Chapter 16: Contact form validation
+    function validateForm() {
+      const name = document.querySelector('#contactForm [name="name"]').value.trim();
+      const email = document.querySelector('#contactForm [name="email"]').value.trim();
+
+      if (name === '' || email === '') {
+        alert("Please fill in all fields");
+        return false;
+      }
+
+      const message = document.querySelector('#contactForm [name="message"]').value.trim();
+      if (message.length < 10) {
+        alert("Please enter a message with at least 10 characters.");
+        return false;
+      }
+
+      alert("Message sent!");
+      return false;
+    }
+
     // Chapter 15: JavaScript practice
     console.log("Welcome to Ayden Roddy's Portfolio");
     console.warn("Welcoming developers");
