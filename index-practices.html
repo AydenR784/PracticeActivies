@@ -24,6 +24,20 @@
       line-height: 1.6;
     }
 
+    /* Chapter 17: Dark theme class */
+    body.dark-theme {
+      background: #1e293b;
+      color: #f8fafc;
+    }
+
+    body.dark-theme footer {
+      background: #1e293b;
+    }
+
+    body.dark-theme tr:nth-child(even) {
+      background: #334155;
+    }
+
     /* header and footer colors */
     header {
       background: linear-gradient(135deg, #438b59 0%, #28613d 100%);
@@ -148,6 +162,25 @@
       border-radius: 8px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
       transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    /* Chapter 17: Project filter fade animation */
+    .project-card--fade-in {
+      animation: projectFadeIn 0.3s ease both;
+    }
+
+    .project-card--fade-out {
+      animation: projectFadeOut 0.3s ease both;
+    }
+
+    @keyframes projectFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes projectFadeOut {
+      from { opacity: 1; }
+      to { opacity: 0; }
     }
 
     .project-card--featured {
@@ -352,6 +385,8 @@
     <h1> Ayden Roddy </h1>
     <h2 class="tagline">Web Developer<br> and Designer</h2>
     <p>I am studying at OCVTS with hopes of working in <strong>Cybersecurity</strong></p>
+    <!-- Chapter 17: Light/dark theme toggle -->
+    <button type="button" onclick="toggleTheme()">Toggle Theme</button>
     <!--hero content here-->
     <!-- Header-->
     <hr>
@@ -410,7 +445,8 @@
   <section id="skills">
     <div class="container">
       <h2>Skills</h2>
-      <ul class="skills-list">
+      <!-- Chapter 17: Dynamic skill tags -->
+      <ul class="skills-list" id="skillsList">
         <li>Python</li>
         <li>HTML</li>
         <li>CSS
@@ -419,8 +455,6 @@
             <li>Grid</li>
           </ul>
         </li>
-        <li>Git</li>
-        <li>javascript</li>
         <li>Java</li>
       </ul>
       <!-- Chapter 16: Experience calculator -->
@@ -442,20 +476,27 @@
   <section id="projects">
     <div class="container">
       <h2>Featured Projects <span class="project-count-badge"><span id="projectCount">0</span></span></h2>
+      <!-- Chapter 17: Project category filter -->
+      <label for="projectCategory">Filter projects:</label>
+      <select id="projectCategory" onchange="filterProjects(this.value)">
+        <option value="all">All</option>
+        <option value="web">Web</option>
+        <option value="app">App</option>
+      </select>
       <!-- project pictures -->
       <div class="projects-grid">
-        <figure class="project-card project-card--featured">
+        <figure class="project-card project-card--featured" data-category="app">
           <span class="badge">Featured</span>
           <img class="featured-project-image" src="FavoritesSS.jpg.png" alt="Image of the Favorites Hub Web Page"
             width="800" height="400">
           <figcaption>Mini Project 1: Favorites Hub Web Page</figcaption>
         </figure>
-        <figure class="project-card">
+        <figure class="project-card" data-category="web">
           <img class="featured-project-image" src="CareerFairImage.png"
             alt="Image of the OCVTS Career Fair 2026 Mockup Web Page" width="800" height="400">
           <figcaption>OCVTS Career Fair 2026 Mockup</figcaption>
         </figure>
-        <figure class="project-card">
+        <figure class="project-card" data-category="web">
           <img class="featured-project-image" src="AboutMeWebsite.png"
             alt="Image of the About Me Website, your current website" width="800" height="400">
           <figcaption>About Me Website</figcaption>
@@ -562,6 +603,79 @@
   <button id="backToTop" type="button" aria-label="Back to top">&#8679;</button>
   <!-- button script -->
   <script>
+    // Chapter 17: Light/dark theme toggle
+    let isDark = false;
+
+    function toggleTheme() {
+      if (!isDark) {
+        document.body.classList.add('dark-theme');
+      } else {
+        document.body.classList.remove('dark-theme');
+      }
+
+      isDark = !isDark;
+    }
+
+    // Chapter 17: Dynamic skill tags
+    const extraSkills = ["JavaScript", "React", "Node.js", "Git"];
+    const skillsList = document.getElementById('skillsList');
+
+    extraSkills.forEach((skill) => {
+      const skillItem = document.createElement('li');
+      skillItem.textContent = skill;
+      skillsList.appendChild(skillItem);
+    });
+
+    // Chapter 17: Project category filter
+    const projectAnimationTimers = new WeakMap();
+
+    function setProjectVisibility(card, isVisible) {
+      clearTimeout(projectAnimationTimers.get(card));
+
+      if (isVisible) {
+        card.style.display = '';
+        card.classList.remove('project-card--fade-out');
+        card.classList.add('project-card--fade-in');
+        projectAnimationTimers.set(card, setTimeout(() => {
+          card.classList.remove('project-card--fade-in');
+        }, 300));
+      } else {
+        card.classList.remove('project-card--fade-in');
+        card.classList.add('project-card--fade-out');
+        projectAnimationTimers.set(card, setTimeout(() => {
+          if (card.classList.contains('project-card--fade-out')) {
+            card.style.display = 'none';
+          }
+        }, 300));
+      }
+    }
+
+    function filterProjects(category) {
+      const projectCards = document.querySelectorAll('.project-card');
+
+      switch (category) {
+        case 'web':
+          projectCards.forEach((card) => {
+            setProjectVisibility(card, card.dataset.category === 'web');
+          });
+          break;
+        case 'app':
+          projectCards.forEach((card) => {
+            setProjectVisibility(card, card.dataset.category === 'app');
+          });
+          break;
+        case 'all':
+          projectCards.forEach((card) => {
+            setProjectVisibility(card, true);
+          });
+          break;
+        default:
+          projectCards.forEach((card) => {
+            setProjectVisibility(card, true);
+          });
+      }
+    }
+
     // Chapter 16: Experience calculator
     function calculateExperience(startYear, startMonth) {
       const currentDate = new Date();
