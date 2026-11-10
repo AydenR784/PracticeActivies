@@ -146,7 +146,7 @@
       padding-left: 20px;
     }
 
-    /* project card styles */
+    /* Chapter 18: Styles for dynamically rendered project cards */
     .projects-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -157,6 +157,7 @@
       position: relative;
       width: 100%;
       margin: 0;
+      padding: 20px;
       box-sizing: border-box;
       border: 1px solid #d5e2d6;
       border-radius: 8px;
@@ -445,17 +446,8 @@
   <section id="skills">
     <div class="container">
       <h2>Skills</h2>
-      <!-- Chapter 17: Dynamic skill tags -->
+      <!-- Chapter 18: Skills object -->
       <ul class="skills-list" id="skillsList">
-        <li>Python</li>
-        <li>HTML</li>
-        <li>CSS
-          <ul>
-            <li>Flexbox</li>
-            <li>Grid</li>
-          </ul>
-        </li>
-        <li>Java</li>
       </ul>
       <!-- Chapter 16: Experience calculator -->
       <p>Experience: <span id="experienceDuration">0 months</span></p>
@@ -483,24 +475,8 @@
         <option value="web">Web</option>
         <option value="app">App</option>
       </select>
-      <!-- project pictures -->
-      <div class="projects-grid">
-        <figure class="project-card project-card--featured" data-category="app">
-          <span class="badge">Featured</span>
-          <img class="featured-project-image" src="FavoritesSS.jpg.png" alt="Image of the Favorites Hub Web Page"
-            width="800" height="400">
-          <figcaption>Mini Project 1: Favorites Hub Web Page</figcaption>
-        </figure>
-        <figure class="project-card" data-category="web">
-          <img class="featured-project-image" src="CareerFairImage.png"
-            alt="Image of the OCVTS Career Fair 2026 Mockup Web Page" width="800" height="400">
-          <figcaption>OCVTS Career Fair 2026 Mockup</figcaption>
-        </figure>
-        <figure class="project-card" data-category="web">
-          <img class="featured-project-image" src="AboutMeWebsite.png"
-            alt="Image of the About Me Website, your current website" width="800" height="400">
-          <figcaption>About Me Website</figcaption>
-        </figure>
+      <!-- Chapter 18: Project cards are rendered from the projects array -->
+      <div class="projects-grid" id="projectsContainer">
       </div>
       <!-- project information table -->
       <!-- Chapter 16: Project counter -->
@@ -525,6 +501,13 @@
             <td>HTML</td>
             <td>2026</td>
             <td>Completed</td>
+          </tr>
+          <!-- Chapter 18: Include all rendered projects in the existing project count -->
+          <tr>
+            <td>About Me Website</td>
+            <td>HTML, CSS, JavaScript</td>
+            <td>2026</td>
+            <td>In progress</td>
           </tr>
         </tbody>
       </table>
@@ -616,14 +599,88 @@
       isDark = !isDark;
     }
 
-    // Chapter 17: Dynamic skill tags
-    const extraSkills = ["JavaScript", "React", "Node.js", "Git"];
+    // Chapter 18: Challenge 18.1 - Create and inspect a projects array
+    const projects = [
+      {
+        title: 'Favorites Hub Web Page',
+        tech: 'HTML, CSS',
+        year: 2026,
+        image: 'FavoritesSS.jpg.png',
+        description: 'A webpage that brings together favorite things in one place.',
+        featured: true,
+        category: 'app'
+      },
+      {
+        title: 'OCVTS Career Fair 2026 Mockup',
+        tech: 'HTML',
+        year: 2026,
+        image: 'CareerFairImage.png',
+        description: 'A mockup webpage for the OCVTS Career Fair.',
+        featured: false,
+        category: 'web'
+      },
+      {
+        title: 'About Me Website',
+        tech: 'HTML, CSS, JavaScript',
+        year: 2026,
+        image: 'AboutMeWebsite.png',
+        description: 'A portfolio website introducing its creator and projects.',
+        featured: false,
+        category: 'web'
+      }
+    ];
+
+    // Chapter 18: Modding 18.1 - Sort projects by year
+    projects.sort((firstProject, secondProject) => firstProject.year - secondProject.year);
+
+    console.log(projects);
+    console.log(projects[1].title);
+
+    // Chapter 18: Challenge 18.2 - Create a skills object with categorized arrays
+    const skills = {
+      frontend: ['HTML', 'CSS', 'Flexbox', 'Grid', 'JavaScript', 'React'],
+      backend: ['Python', 'Java', 'Node.js'],
+      tools: ['Git']
+    };
+
+    console.log(skills.frontend.length);
+    skills.backend.push('Express.js');
+
+    // Chapter 18: Modding 18.2 - Convert the skills object to JSON
+    console.log(JSON.stringify(skills));
+
     const skillsList = document.getElementById('skillsList');
 
-    extraSkills.forEach((skill) => {
-      const skillItem = document.createElement('li');
-      skillItem.textContent = skill;
-      skillsList.appendChild(skillItem);
+    Object.values(skills).forEach((categorySkills) => {
+      categorySkills.forEach((skill) => {
+        const skillItem = document.createElement('li');
+        skillItem.textContent = skill;
+        skillsList.appendChild(skillItem);
+      });
+    });
+
+    // Chapter 18: Challenge 18.3 - Render project cards with forEach
+    const projectsContainer = document.getElementById('projectsContainer');
+
+    // Chapter 18: Modding 18.3 - Render only featured projects
+    projects.filter((project) => project.featured).forEach((project) => {
+      const projectCard = document.createElement('div');
+      projectCard.className = 'project-card';
+      projectCard.dataset.category = project.category;
+
+      if (project.featured) {
+        projectCard.classList.add('project-card--featured');
+      }
+
+      projectCard.innerHTML = `
+        ${project.featured ? '<span class="badge">Featured</span>' : ''}
+        <img class="featured-project-image" src="${project.image}" alt="${project.title}" width="800" height="400">
+        <h3>${project.title}</h3>
+        <p><strong>Technologies:</strong> ${project.tech}</p>
+        <p><strong>Year:</strong> ${project.year}</p>
+        <p>${project.description}</p>
+      `;
+      projectsContainer.appendChild(projectCard);
     });
 
     // Chapter 17: Project category filter
@@ -693,14 +750,14 @@
 
     // Chapter 16: Project counter
     function updateProjectCount() {
-      const projectRows = document.querySelectorAll('table tbody tr');
-      document.getElementById('projectCount').textContent = projectRows.length;
-      console.log(projectRows.length);
+      const projectCards = document.querySelectorAll('#projectsContainer .project-card');
+      document.getElementById('projectCount').textContent = projectCards.length;
+      console.log(projectCards.length);
     }
 
     updateProjectCount();
     new MutationObserver(updateProjectCount).observe(
-      document.getElementById('projectTableBody'),
+      document.getElementById('projectsContainer'),
       { childList: true }
     );
 
