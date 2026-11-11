@@ -35,3 +35,31 @@ if (score >= 90) {
 } else {
   console.log("Grade: F");
 }
+
+const nums = [1, 2, 3];
+nums.push(4);
+nums.shift();
+console.log(nums);
+
+const projects = [
+  {
+    title: "Portfolio Website",
+    tech: "HTML and CSS",
+    year: 2026,
+    description: "A website showcasing my projects."
+  }
+];
+
+projects.push({
+  title: "Calculator",
+  tech: "JavaScript",
+  year: 2026,
+  description: "A simple calculator app."
+});
+
+projects.forEach(function (project) {
+  console.log(project.title);
+});
+
+const projectsJson = JSON.stringify(projects, null, 2);
+console.log(projectsJson);
