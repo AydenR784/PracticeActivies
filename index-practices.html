@@ -463,6 +463,8 @@
   <section id="projects">
     <div class="container">
       <h2>Projects <span class="project-count-badge"><span id="projectCount">0</span></span></h2>
+      <!-- Chapter 19: Featured project banner -->
+      <p id="featuredProject"></p>
       <!-- Chapter 17: Project category filter -->
       <label for="projectCategory">Filter projects:</label>
       <select id="projectCategory" onchange="filterProjects(this.value)">
@@ -569,6 +571,8 @@
     <hr>
     <!-- Chapter 19: Display the last updated date -->
     <p>Last updated: <span id="lastUpdated"></span></p>
+    <!-- Chapter 19: Time on site counter -->
+    <p>Time on site: <span id="timeOnSite">0</span> seconds</p>
     <p>Connect with me:</p>
     <!-- social links -->
     <p>
@@ -637,6 +641,8 @@
     function showRandomProject() {
       const index = Math.floor(Math.random() * projects.length);
       console.log("Today's featured project: " + projects[index].title);
+      document.getElementById('featuredProject').textContent =
+        "Today's featured project: " + projects[index].title;
     }
 
     showRandomProject();
@@ -654,6 +660,10 @@
     const formattedInput = lowercaseInput.replace(/[0-9]/g, '');
     console.log(formattedInput);
 
+    // Chapter 19: Modding 19.2 - Check that input has only letters and spaces
+    const isValidInput = /^[a-zA-Z ]+$/.test(lowercaseInput);
+    console.log("Input is valid: " + isValidInput);
+
     // Chapter 19: Challenge 19.3 - Display the last updated date
     const now = new Date();
     const formattedDate = now.toLocaleDateString('en-US', {
@@ -662,6 +672,13 @@
       year: 'numeric'
     });
     document.getElementById('lastUpdated').textContent = formattedDate;
+
+    // Chapter 19: Modding 19.3 - Count time on site
+    let secondsOnSite = 0;
+    setInterval(function () {
+      secondsOnSite = secondsOnSite + 1;
+      document.getElementById('timeOnSite').textContent = secondsOnSite;
+    }, 1000);
 
     console.log(projects);
     console.log(projects[1].title);
