@@ -567,6 +567,8 @@
   <footer>
     <!-- Chapter 15: Dynamic copyright year and button handlers -->
     <hr>
+    <!-- Chapter 19: Display the last updated date -->
+    <p>Last updated: <span id="lastUpdated"></span></p>
     <p>Connect with me:</p>
     <!-- social links -->
     <p>
@@ -630,6 +632,36 @@
         category: 'web'
       }
     ];
+
+    // Chapter 19: Challenge 19.1 - Show a random featured project
+    function showRandomProject() {
+      const index = Math.floor(Math.random() * projects.length);
+      console.log("Today's featured project: " + projects[index].title);
+    }
+
+    showRandomProject();
+
+    // Chapter 19: Challenge 19.2 - Format user input
+    const rawInput = " Alex Morgan ";
+    console.log(rawInput);
+
+    const trimmedInput = rawInput.trim();
+    console.log(trimmedInput);
+
+    const lowercaseInput = trimmedInput.toLowerCase();
+    console.log(lowercaseInput);
+
+    const formattedInput = lowercaseInput.replace(/[0-9]/g, '');
+    console.log(formattedInput);
+
+    // Chapter 19: Challenge 19.3 - Display the last updated date
+    const now = new Date();
+    const formattedDate = now.toLocaleDateString('en-US', {
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric'
+    });
+    document.getElementById('lastUpdated').textContent = formattedDate;
 
     console.log(projects);
     console.log(projects[1].title);
