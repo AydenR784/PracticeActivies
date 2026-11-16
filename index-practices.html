@@ -109,10 +109,12 @@
       scroll-behavior: smooth;
     }
 
+    /* Chapter 20: Leave room below the sticky navigation when scrolling */
     section {
       padding: 60px 0;
       margin-bottom: 0;
       border-bottom: 1px solid #d5e2d6;
+      scroll-margin-top: 80px;
     }
 
     nav {
@@ -139,6 +141,11 @@
 
     nav a {
       color: white;
+    }
+
+    /* Chapter 20: Show the summary only when printing */
+    #printSummary {
+      display: none;
     }
 
     aside {
@@ -369,6 +376,25 @@
         padding-left: 30px;
       }
     }
+
+    /* Chapter 20: Print styles */
+    @media print {
+      * {
+        color: black !important;
+        background: white !important;
+        box-shadow: none !important;
+      }
+
+      nav,
+      button {
+        display: none !important;
+      }
+
+      /* Chapter 20: Print-only portfolio summary */
+      #printSummary {
+        display: block !important;
+      }
+    }
   </style>
 </head>
 
@@ -396,6 +422,14 @@
       <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
+  <!-- Chapter 20: Tip of the Visit -->
+  <p><strong>Tip of the Visit:</strong> <span id="visitTip">Take a look at my projects.</span></p>
+  <!-- Chapter 20: Summary that only appears when printing -->
+  <div id="printSummary">
+    <h2>Portfolio Summary</h2>
+    <p>Ayden Roddy is a computer science student interested in cybersecurity. This portfolio includes information
+      about my background, skills, projects, and contact details.</p>
+  </div>
   <section id="about">
     <div class="container">
       <h2>About Me </h2>
@@ -583,7 +617,8 @@
       <a href="mailto:ayden082509@gmail.com">Email</a> |
       <a href="tel:7326428374">Phone</a> |
       <button type="button" onclick="sayHello()">Say Hello</button>
-      <button type="button" onclick="window.print()">Print This Page</button>
+      <!-- Chapter 20: Print portfolio button -->
+      <button type="button" onclick="printPortfolio()">Print / Save as PDF</button>
       <button type="button" onclick="console.clear()">Clear Console</button>
       <button type="button" onclick="toggleContact()">Toggle Contact Section</button>
     </p>
@@ -848,6 +883,48 @@
     function toggleContact() {
       const contactSection = document.getElementById('contact');
       contactSection.hidden = !contactSection.hidden;
+    }
+
+    // Chapter 20: Challenge 20.1 - Show a delayed welcome
+    function showWelcomeMessage() {
+      alert("Thanks for exploring my portfolio!");
+    }
+
+    setTimeout(showWelcomeMessage, 5000);
+
+    // Chapter 20: Modding 20.1 - Rotate a tip every 10 seconds
+    const visitTips = [
+      'Take a look at my projects.',
+      'Check out the skills I am learning.',
+      'Use the contact section to reach me.'
+    ];
+    let tipIndex = 0;
+
+    setInterval(function () {
+      tipIndex = tipIndex + 1;
+      if (tipIndex === visitTips.length) {
+        tipIndex = 0;
+      }
+      document.getElementById('visitTip').textContent = visitTips[tipIndex];
+    }, 10000);
+
+    // Chapter 20: Challenge 20.2 - Smooth scroll navigation
+    const navLinks = document.querySelectorAll('nav a[href^="#"]');
+
+    navLinks.forEach(function (link) {
+      link.addEventListener('click', function (event) {
+        const section = document.querySelector(link.getAttribute('href'));
+
+        if (section) {
+          event.preventDefault();
+          section.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+
+    // Chapter 20: Challenge 20.3 - Print portfolio
+    function printPortfolio() {
+      window.print();
     }
 
     const backToTopButton = document.getElementById('backToTop');
