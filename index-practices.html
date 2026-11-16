@@ -143,6 +143,12 @@
       color: white;
     }
 
+    /* Chapter 21: Highlight the active navigation link */
+    nav a.active {
+      color: var(--accent);
+      text-decoration: underline;
+    }
+
     /* Chapter 20: Show the summary only when printing */
     #printSummary {
       display: none;
@@ -562,7 +568,9 @@
           <legend>Your contact details</legend>
           <input type="text" name="name" placeholder="Your name">
           <input type="email" name="email" placeholder="Your email">
-          <textarea name="message" rows="5" placeholder="Message"></textarea>
+          <!-- Chapter 21: Live character counter -->
+          <textarea id="message" name="message" rows="5" maxlength="500" placeholder="Message"></textarea>
+          <p><span id="charCount">0</span> / 500</p>
         </fieldset>
         <!-- project type -->
         <fieldset>
@@ -587,7 +595,7 @@
           <legend>Updates</legend>
           <label><input type="checkbox" name="newsletter" value="yes"> Subscribe to updates</label>
         </fieldset>
-        <button type="submit">Send Message 🚀</button>
+        <button id="submitButton" type="submit">Send Message 🚀</button>
         <button type="button" onclick="this.form.reset()">Clear Form</button>
         <button type="button" onclick="window.print()">Print</button>
       </form>
@@ -741,12 +749,15 @@
       });
     });
 
-    // Chapter 18: Challenge 18.3 - Render all project cards from the projects array
+    // Chapter 21: Challenge 21.1 - Render project cards with createElement
     const projectsContainer = document.getElementById('projectsContainer');
+    projectsContainer.innerHTML = '';
+    let draggedProject = null;
 
     projects.forEach((project, index) => {
       const projectCard = document.createElement('div');
       projectCard.className = 'project-card';
+      projectCard.draggable = true;
       projectCard.dataset.category = project.category;
       projectCard.dataset.title = project.title;
       projectCard.dataset.year = project.year;
@@ -755,27 +766,95 @@
         projectCard.classList.add('project-card--featured');
       }
 
-      projectCard.innerHTML = `
-        ${project.featured ? '<span class="badge">Featured</span>' : ''}
-        <img class="featured-project-image" src="${project.image}" alt="${project.title}" width="800" height="400">
-        <h3>${project.title}</h3>
-        <p><strong>Technologies:</strong> ${project.tech}</p>
-        <p><strong>Year:</strong> ${project.year}</p>
-        <button class="project-details-toggle" type="button" aria-expanded="false" aria-controls="project-details-${index}">View details</button>
-        <div class="project-details" id="project-details-${index}" hidden>
-          <p>${project.description}</p>
-          <p><strong>Category:</strong> ${project.category}</p>
-          <p><strong>Featured:</strong> ${project.featured ? 'Yes' : 'No'}</p>
-        </div>
-      `;
-      projectCard.querySelector('.project-details-toggle').addEventListener('click', (event) => {
-        const detailsButton = event.currentTarget;
-        const details = projectCard.querySelector('.project-details');
+      if (project.featured) {
+        const badge = document.createElement('span');
+        badge.className = 'badge';
+        badge.textContent = 'Featured';
+        projectCard.appendChild(badge);
+      }
+
+      const image = document.createElement('img');
+      image.className = 'featured-project-image';
+      image.src = project.image;
+      image.alt = project.title;
+      image.width = 800;
+      image.height = 400;
+      projectCard.appendChild(image);
+
+      const title = document.createElement('h3');
+      title.textContent = project.title;
+      projectCard.appendChild(title);
+
+      const technologies = document.createElement('p');
+      const technologyLabel = document.createElement('strong');
+      technologyLabel.textContent = 'Technologies: ';
+      technologies.appendChild(technologyLabel);
+      technologies.appendChild(document.createTextNode(project.tech));
+      projectCard.appendChild(technologies);
+
+      const year = document.createElement('p');
+      const yearLabel = document.createElement('strong');
+      yearLabel.textContent = 'Year: ';
+      year.appendChild(yearLabel);
+      year.appendChild(document.createTextNode(project.year));
+      projectCard.appendChild(year);
+
+      const detailsButton = document.createElement('button');
+      detailsButton.className = 'project-details-toggle';
+      detailsButton.type = 'button';
+      detailsButton.textContent = 'View details';
+      detailsButton.setAttribute('aria-expanded', 'false');
+      detailsButton.setAttribute('aria-controls', 'project-details-' + index);
+      projectCard.appendChild(detailsButton);
+
+      const details = document.createElement('div');
+      details.className = 'project-details';
+      details.id = 'project-details-' + index;
+      details.hidden = true;
+
+      const description = document.createElement('p');
+      description.textContent = project.description;
+      details.appendChild(description);
+
+      const category = document.createElement('p');
+      const categoryLabel = document.createElement('strong');
+      categoryLabel.textContent = 'Category: ';
+      category.appendChild(categoryLabel);
+      category.appendChild(document.createTextNode(project.category));
+      details.appendChild(category);
+
+      const featured = document.createElement('p');
+      const featuredLabel = document.createElement('strong');
+      featuredLabel.textContent = 'Featured: ';
+      featured.appendChild(featuredLabel);
+      featured.appendChild(document.createTextNode(project.featured ? 'Yes' : 'No'));
+      details.appendChild(featured);
+
+      projectCard.appendChild(details);
+
+      detailsButton.addEventListener('click', function () {
         const isExpanded = detailsButton.getAttribute('aria-expanded') === 'true';
         detailsButton.setAttribute('aria-expanded', String(!isExpanded));
         detailsButton.textContent = isExpanded ? 'View details' : 'Hide details';
         details.hidden = isExpanded;
       });
+
+      // Chapter 21: Modding 21.1 - Drag and drop to reorder projects
+      projectCard.addEventListener('dragstart', function () {
+        draggedProject = projectCard;
+      });
+
+      projectCard.addEventListener('dragover', function (event) {
+        event.preventDefault();
+      });
+
+      projectCard.addEventListener('drop', function (event) {
+        event.preventDefault();
+        if (draggedProject !== projectCard) {
+          projectsContainer.insertBefore(draggedProject, projectCard);
+        }
+      });
+
       projectsContainer.appendChild(projectCard);
     });
 
@@ -835,6 +914,28 @@
       document.getElementById('projectsContainer'),
       { childList: true }
     );
+
+    // Chapter 21: Challenge 21.2 - Update the message character count
+    const message = document.getElementById('message');
+    const charCount = document.getElementById('charCount');
+    const submitButton = document.getElementById('submitButton');
+
+    function updateMessageCount() {
+      charCount.textContent = message.value.length;
+      submitButton.disabled = message.value.length >= 500;
+      if (message.value.length > 450) {
+        charCount.style.color = 'red';
+      } else {
+        charCount.style.color = 'black';
+      }
+    }
+
+    message.addEventListener('input', updateMessageCount);
+    document.getElementById('contactForm').addEventListener('reset', function () {
+      setTimeout(updateMessageCount, 0);
+    });
+
+    // Chapter 21: Modding 21.2 - Disable submit when the message is full
 
     // Chapter 16: Contact form validation
     function validateForm() {
@@ -920,6 +1021,29 @@
           section.scrollIntoView({ behavior: 'smooth' });
         }
       });
+    });
+
+    // Chapter 21: Challenge 21.3 - Highlight the active navigation link
+    const sections = document.querySelectorAll('section');
+
+    // Chapter 21: Modding 21.3 - Use IntersectionObserver for active links
+    const sectionObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          navLinks.forEach(function (link) {
+            link.classList.remove('active');
+          });
+
+          const activeLink = document.querySelector('nav a[href="#' + entry.target.id + '"]');
+          if (activeLink) {
+            activeLink.classList.add('active');
+          }
+        }
+      });
+    }, { rootMargin: '-100px 0px -70% 0px' });
+
+    sections.forEach(function (section) {
+      sectionObserver.observe(section);
     });
 
     // Chapter 20: Challenge 20.3 - Print portfolio
