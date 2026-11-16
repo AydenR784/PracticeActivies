@@ -165,23 +165,8 @@
       transition: transform 0.3s, box-shadow 0.3s;
     }
 
-    /* Chapter 17: Project filter fade animation */
-    .project-card--fade-in {
-      animation: projectFadeIn 0.3s ease both;
-    }
-
-    .project-card--fade-out {
-      animation: projectFadeOut 0.3s ease both;
-    }
-
-    @keyframes projectFadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    @keyframes projectFadeOut {
-      from { opacity: 1; }
-      to { opacity: 0; }
+    .project-card[hidden] {
+      display: none;
     }
 
     .project-card--featured {
@@ -213,6 +198,16 @@
     .project-card:hover {
       transform: translateY(-4px);
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+    }
+
+    .project-details {
+      margin-top: 16px;
+      padding-top: 12px;
+      border-top: 1px solid #d5e2d6;
+    }
+
+    .project-details-toggle {
+      margin-top: 8px;
     }
 
     button {
@@ -467,13 +462,19 @@
   <!-- projects section -->
   <section id="projects">
     <div class="container">
-      <h2>Featured Projects <span class="project-count-badge"><span id="projectCount">0</span></span></h2>
+      <h2>Projects <span class="project-count-badge"><span id="projectCount">0</span></span></h2>
       <!-- Chapter 17: Project category filter -->
       <label for="projectCategory">Filter projects:</label>
       <select id="projectCategory" onchange="filterProjects(this.value)">
         <option value="all">All</option>
         <option value="web">Web</option>
         <option value="app">App</option>
+      </select>
+      <label for="projectSort">Sort projects:</label>
+      <select id="projectSort" onchange="sortProjects(this.value)">
+        <option value="title-asc">Title (A–Z)</option>
+        <option value="year-desc">Newest</option>
+        <option value="year-asc">Oldest</option>
       </select>
       <!-- Chapter 18: Project cards are rendered from the projects array -->
       <div class="projects-grid" id="projectsContainer">
@@ -630,9 +631,6 @@
       }
     ];
 
-    // Chapter 18: Modding 18.1 - Sort projects by year
-    projects.sort((firstProject, secondProject) => firstProject.year - secondProject.year);
-
     console.log(projects);
     console.log(projects[1].title);
 
@@ -659,14 +657,15 @@
       });
     });
 
-    // Chapter 18: Challenge 18.3 - Render project cards with forEach
+    // Chapter 18: Challenge 18.3 - Render all project cards from the projects array
     const projectsContainer = document.getElementById('projectsContainer');
 
-    // Chapter 18: Modding 18.3 - Render only featured projects
-    projects.filter((project) => project.featured).forEach((project) => {
+    projects.forEach((project, index) => {
       const projectCard = document.createElement('div');
       projectCard.className = 'project-card';
       projectCard.dataset.category = project.category;
+      projectCard.dataset.title = project.title;
+      projectCard.dataset.year = project.year;
 
       if (project.featured) {
         projectCard.classList.add('project-card--featured');
@@ -678,59 +677,51 @@
         <h3>${project.title}</h3>
         <p><strong>Technologies:</strong> ${project.tech}</p>
         <p><strong>Year:</strong> ${project.year}</p>
-        <p>${project.description}</p>
+        <button class="project-details-toggle" type="button" aria-expanded="false" aria-controls="project-details-${index}">View details</button>
+        <div class="project-details" id="project-details-${index}" hidden>
+          <p>${project.description}</p>
+          <p><strong>Category:</strong> ${project.category}</p>
+          <p><strong>Featured:</strong> ${project.featured ? 'Yes' : 'No'}</p>
+        </div>
       `;
+      projectCard.querySelector('.project-details-toggle').addEventListener('click', (event) => {
+        const detailsButton = event.currentTarget;
+        const details = projectCard.querySelector('.project-details');
+        const isExpanded = detailsButton.getAttribute('aria-expanded') === 'true';
+        detailsButton.setAttribute('aria-expanded', String(!isExpanded));
+        detailsButton.textContent = isExpanded ? 'View details' : 'Hide details';
+        details.hidden = isExpanded;
+      });
       projectsContainer.appendChild(projectCard);
     });
 
-    // Chapter 17: Project category filter
-    const projectAnimationTimers = new WeakMap();
+    function sortProjects(sortOrder) {
+      const projectCards = Array.from(projectsContainer.querySelectorAll('.project-card'));
+      const comparison = {
+        'title-asc': (firstCard, secondCard) => firstCard.dataset.title.localeCompare(secondCard.dataset.title),
+        'year-desc': (firstCard, secondCard) => Number(secondCard.dataset.year) - Number(firstCard.dataset.year),
+        'year-asc': (firstCard, secondCard) => Number(firstCard.dataset.year) - Number(secondCard.dataset.year)
+      }[sortOrder];
 
-    function setProjectVisibility(card, isVisible) {
-      clearTimeout(projectAnimationTimers.get(card));
-
-      if (isVisible) {
-        card.style.display = '';
-        card.classList.remove('project-card--fade-out');
-        card.classList.add('project-card--fade-in');
-        projectAnimationTimers.set(card, setTimeout(() => {
-          card.classList.remove('project-card--fade-in');
-        }, 300));
-      } else {
-        card.classList.remove('project-card--fade-in');
-        card.classList.add('project-card--fade-out');
-        projectAnimationTimers.set(card, setTimeout(() => {
-          if (card.classList.contains('project-card--fade-out')) {
-            card.style.display = 'none';
-          }
-        }, 300));
+      if (!comparison) {
+        return;
       }
+
+      projectCards.sort(comparison).forEach((projectCard) => {
+        projectsContainer.appendChild(projectCard);
+      });
     }
 
+    sortProjects(document.getElementById('projectSort').value);
+
+    // Chapter 17: Project category filter
     function filterProjects(category) {
       const projectCards = document.querySelectorAll('.project-card');
+      const selectedCategory = category === 'web' || category === 'app' ? category : 'all';
 
-      switch (category) {
-        case 'web':
-          projectCards.forEach((card) => {
-            setProjectVisibility(card, card.dataset.category === 'web');
-          });
-          break;
-        case 'app':
-          projectCards.forEach((card) => {
-            setProjectVisibility(card, card.dataset.category === 'app');
-          });
-          break;
-        case 'all':
-          projectCards.forEach((card) => {
-            setProjectVisibility(card, true);
-          });
-          break;
-        default:
-          projectCards.forEach((card) => {
-            setProjectVisibility(card, true);
-          });
-      }
+      projectCards.forEach((card) => {
+        card.hidden = selectedCategory !== 'all' && card.dataset.category !== selectedCategory;
+      });
     }
 
     // Chapter 16: Experience calculator
